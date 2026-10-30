@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>إدارة مخزن الملابس</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#0a0a0b;--p:#141416;--p2:#1d1d20;--b:#2b2b30;--t:#ececee;--m:#8e8e96;--a:#f0f0f2;--bad:#ff6b6b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 Cairo,Tahoma,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--b);padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+h1{font-size:18px;margin:0 0 0 10px}
+.tab{background:none;border:0;color:var(--m);padding:8px 14px;border-radius:8px}.tab.on{background:var(--p2);color:var(--a)}
+main{max-width:1200px;margin:0 auto;padding:16px}
+.bar{display:flex;gap:8px;margin:10px 0}
+input,select,textarea{background:var(--p);border:1px solid var(--b);color:var(--t);padding:9px 12px;border-radius:8px;font:inherit;width:100%;min-width:0}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid #5d5d66;outline-offset:1px}
+button{font:inherit;cursor:pointer;border:1px solid var(--b);background:var(--p2);color:var(--t);padding:8px 14px;border-radius:8px;white-space:nowrap}
+button:hover{border-color:#6b6b73}
+.pri{background:var(--a);color:#0a0a0b;border-color:var(--a);font-weight:700}.ghost{background:none}
+#q{font-size:17px;padding:13px 16px}
+.tw{overflow-x:auto;border:1px solid var(--b);border-radius:10px;background:var(--p)}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{text-align:right;color:var(--m);font-weight:600;font-size:13px;padding:10px 12px;background:var(--p2)}
+td{padding:9px 12px;border-top:1px solid var(--b);vertical-align:middle}
+tr:hover td{background:#19191c}
+.nm{font-weight:600}.bc{direction:ltr;text-align:right;color:var(--m);font-family:monospace}
+.loc,.box{display:inline-block;padding:1px 10px;border-radius:6px;background:var(--p2);border:1px solid var(--b)}
+.box{background:var(--a);color:#0a0a0b;font-weight:700;border-color:var(--a);direction:ltr}
+.qt{display:flex;align-items:center;gap:6px}.qt button{padding:1px 9px}.zero{color:var(--bad)}
+.mut{color:var(--m)}.note{padding:8px 12px;border:1px dashed var(--b);border-radius:8px;margin-bottom:8px}
+.card{background:var(--p);border:1px solid var(--b);border-radius:10px;padding:14px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:14px}.grid .card{margin:0}
+h3{margin:0 0 8px;display:flex;justify-content:space-between;align-items:center;font-size:16px}
+.col{border-top:1px solid var(--b);padding-top:8px;margin-top:8px}.ch{display:flex;justify-content:space-between;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.chip{background:var(--p2);border:1px solid var(--b);border-radius:6px;padding:1px 10px}
+.chip i{cursor:pointer;color:var(--m);margin-inline-start:8px;font-style:normal}.chip i:hover{color:var(--bad)}
+.x{padding:2px 10px;font-size:12px;color:var(--m)}
+dialog{background:var(--p);color:var(--t);border:1px solid var(--b);border-radius:12px;width:min(460px,92vw);padding:20px}dialog::backdrop{background:#000b}
+label{display:block;color:var(--m);font-size:13px;margin-bottom:10px}label input,label select{margin-top:4px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.empty{padding:40px 20px;text-align:center;color:var(--m)}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--a);color:#0a0a0b;padding:8px 18px;border-radius:20px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}#toast.on{opacity:1}body.ro .adm{display:none!important}body.ro nav{display:none}#gate{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}#gate.off{display:none}#role:empty{display:none}.gc{max-width:380px;width:100%;text-align:center}.gc button{width:100%;margin-top:10px;padding:13px;font-size:16px}#role{cursor:pointer;border:1px solid var(--b);border-radius:20px;padding:2px 12px}dialog{max-height:90vh;overflow:auto}td[data-l]::before{content:attr(data-l);color:var(--m);font-size:13px}
+@media(max-width:720px){h1{font-size:16px;margin:0}header{padding:10px 14px}nav{position:fixed;bottom:0;inset-inline:0;z-index:20;display:flex;background:var(--p);border-top:1px solid var(--b);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}nav .tab{flex:1;padding:8px 2px;font-size:12px}main{padding:12px 12px 96px}input,select,textarea{font-size:16px}button{min-height:40px}table,thead,tbody,tr,td{display:block;min-width:0!important}thead{display:none}.tw{border:0;background:none;overflow:visible}tr{background:var(--p);border:1px solid var(--b);border-radius:10px;margin-bottom:10px;padding:6px 0}td{border:0!important;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;padding:5px 14px}td.nm{font-size:16px;justify-content:flex-start}tr:hover td{background:none}.grid{grid-template-columns:1fr}}#role{margin-inline-start:auto;font-size:13px;color:var(--m)}
+</style></head><body class="ro"><script>window.onerror=function(m,s,l,c){var a=document.getElementById("app");if(a)a.innerHTML='<p style="padding:20px;color:#ff6b6b;direction:ltr;text-align:left">Error: '+m+' (line '+l+':'+c+')</p>'};</script>
+<header><h1>إدارة مخزن الملابس</h1><nav><button class="tab" data-tab="s">البحث</button><button class="tab adm" data-tab="l">المواقع</button><button class="tab adm" data-tab="b">الصناديق</button><button class="tab adm" data-tab="k">النسخ</button><button class="tab adm" data-tab="r">المستخدمون</button></nav><span id="role"></span></header>
+<div id="gate" class="off"></div><main id="app"><p class="mut" style="padding:24px;text-align:center">جارٍ التحميل… إذا بقيت هذه الرسالة فالمتصفح الذي فتحت منه الصفحة لا يشغّل السكربت. افتح الرابط من Safari بعد تسجيل دخولك في claude.ai أو من داخل تطبيق Claude.</p></main><dialog id="dp"></dialog><dialog id="dc"></dialog><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),K="wh_v1";
+let S={loc:{},boxes:[],prods:[]},tab="s",q="",tt,DB=null,ADMIN=true,LOC=null,SYN={};
+try{LOC=JSON.parse(localStorage.getItem(K))}catch(e){}
+const J=o=>JSON.stringify(o,Object.keys(o).sort()),fix=()=>S.boxes.forEach(b=>{b.id=b.id||uid()});
+const docs=()=>{const m={"meta/loc":{json:JSON.stringify(S.loc)}};S.boxes.forEach(b=>m["boxes/"+b.id]=b);S.prods.forEach(p=>m["prods/"+p.id]=p);return m};
+async function save(){fix();if(!ADMIN)return;const m=docs(),set={},del=[];
+for(const[p,v]of Object.entries(m)){const j=J(v);if(SYN[p]!==j){SYN[p]=j;set[p]=v}}
+for(const p of Object.keys(SYN))if(!(p in m)){delete SYN[p];del.push(p)}
+if(!del.length&&!Object.keys(set).length)return;
+try{const r=await api("/api/batch",{method:"POST",body:JSON.stringify({set,del})});VER=r.v}catch(e){toast("تعذّر الحفظ: "+e.message)}}
+const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1800)};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nz=s=>String(s||"").toLowerCase().replace(/[\u064B-\u0652\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));
+const uid=()=>Math.random().toString(36).slice(2,9),names=v=>v.split(/[,،]/).map(x=>x.trim()).filter(Boolean);
+const da=o=>Object.entries(o).map(([k,v])=>`data-${k}="${esc(v)}"`).join(" ");
+const boxOf=c=>S.boxes.find(b=>b.code===c);
+const where=p=>{const b=p.box&&boxOf(p.box),s=b||p;return{u:s.u||"",c:s.c||"",s:s.s||"",box:p.box||""}};
+const ask=m=>new Promise(r=>{const d=$("#dc");d.innerHTML=`<p>${m}</p><div class="bar"><button class="pri">تأكيد</button><button class="ghost">إلغاء</button></div>`;const[y,n]=d.querySelectorAll("button");y.onclick=()=>{d.close();r(true)};n.onclick=()=>{d.close();r(false)};d.showModal()});
+const opts=(a,v,ph)=>`<option value="">${ph}</option>`+a.map(x=>`<option ${x===v?"selected":""}>${esc(x)}</option>`).join("");
+const loc3=(id,v={})=>`<div class="g3" id="${id}"><select>${opts(Object.keys(S.loc),v.u,"الأسكفة")}</select><select>${opts(Object.keys(S.loc[v.u]||{}),v.c,"العمود")}</select><select>${opts((S.loc[v.u]||{})[v.c]||[],v.s,"الرف")}</select></div>`;
+const rd=id=>{const[u,c,s]=document.querySelectorAll("#"+id+" select");return{u:u.value,c:c.value,s:s.value}};
+const inUse=(u,c,s)=>[...S.boxes,...S.prods].some(o=>o.u===u&&(!c||o.c===c)&&(!s||o.s===s));
+
+function doSearch(){const t=nz(q).split(/\s+/).filter(Boolean);return S.prods.filter(p=>{const w=where(p),h=nz([p.name,p.barcode,p.color,p.size,w.u,w.c,w.s,w.box].join(" "));return t.every(x=>h.includes(x))})}
+function table(r){return`<table><thead><tr><th>المنتج<th>الباركود<th>اللون<th>المقاس<th>الكمية<th>الأسكفة<th>العمود<th>الرف<th>الصندوق<th class="adm"></thead><tbody>`+r.map(p=>{const w=where(p),ph=v=>v?`<span class="loc">${esc(v)}</span>`:"—";return`<tr><td class="nm">${esc(p.name)}<td class="bc" data-l="الباركود">${esc(p.barcode)}<td data-l="اللون">${esc(p.color)}<td data-l="المقاس">${esc(p.size)}<td data-l="الكمية"><div class="qt"><button class="adm" data-act="qm" data-id="${p.id}">−</button><b class="${p.qty>0?"":"zero"}">${p.qty}</b><button class="adm" data-act="qp" data-id="${p.id}">+</button></div><td data-l="الأسكفة">${ph(w.u)}<td data-l="العمود">${ph(w.c)}<td data-l="الرف">${ph(w.s)}<td data-l="الصندوق">${w.box?`<span class="box">${esc(w.box)}</span>`:"—"}<td class="adm"><button class="x" data-act="editP" data-id="${p.id}">تعديل</button> <button class="x" data-act="delP" data-id="${p.id}">حذف</button>`}).join("")+"</tbody></table>"}
+function res(){const r=doSearch(),tot=r.reduce((a,p)=>a+(+p.qty||0),0),k=nz(q.trim());
+$("#sum").textContent=`${r.length} منتج · ${tot} قطعة`+(r.length>200?" · يعرض أول 200 نتيجة":"");
+const bm=k?S.boxes.filter(b=>nz(b.code).includes(k)&&!S.prods.some(p=>p.box===b.code)).map(b=>`<div class="note">صندوق فارغ <span class="box">${esc(b.code)}</span> — ${esc([b.u,b.c,b.s].join(" / "))}</div>`).join(""):"";
+$("#res").innerHTML=bm+(!S.prods.length?`<div class="empty"><p>لا توجد بيانات بعد. عرّف الأسكفات والأعمدة والرفوف من تبويب «المواقع»، ثم أضف الصناديق والمنتجات.</p><button class="ghost adm" data-act="seed">تحميل بيانات تجريبية</button></div>`:!r.length?`<p class="mut">لا توجد نتائج. اضغط Enter لإضافة «${esc(q.trim())}» كمنتج جديد.</p>`:`<div class="tw">${table(r.slice(0,200))}</div>`)}
+function viewL(){return`<div class="bar"><input placeholder="أسكفة جديدة (يمكن عدة أسماء بفاصلة)"><button class="pri" data-act="addU">+ أسكفة</button></div>`+(Object.keys(S.loc).length?"":'<p class="empty">ابدأ بإضافة أسكفة ثم الأعمدة والرفوف داخلها.</p>')+`<div class="grid">`+Object.entries(S.loc).map(([u,cs])=>`<section class="card"><h3>أسكفة ${esc(u)}<button class="x" data-act="delU" ${da({u})}>حذف</button></h3>`+Object.entries(cs).map(([c,ss])=>`<div class="col"><div class="ch"><b>عمود ${esc(c)}</b><button class="x" data-act="delC" ${da({u,c})}>حذف</button></div><div class="chips">${ss.map(s=>`<span class="chip">${esc(s)}<i data-act="delS" ${da({u,c,s})}>×</i></span>`).join("")||'<span class="mut">لا رفوف</span>'}</div><div class="bar"><input placeholder="رفوف (مثال: ر1، ر2، ر3)"><button data-act="addS" ${da({u,c})}>+ رف</button></div></div>`).join("")+`<div class="bar"><input placeholder="عمود جديد"><button data-act="addC" ${da({u})}>+ عمود</button></div></section>`).join("")+"</div>"}
+function viewB(){return`<div class="bar"><button class="pri" data-act="addB">+ صندوق جديد</button></div>`+(S.boxes.length?`<div class="tw"><table style="min-width:700px"><thead><tr><th>الكود<th>الأسكفة<th>العمود<th>الرف<th>المنتجات<th>القطع<th></thead><tbody>${S.boxes.map(b=>{const ps=S.prods.filter(p=>p.box===b.code);return`<tr><td><span class="box">${esc(b.code)}</span><td data-l="الأسكفة">${esc(b.u)}<td data-l="العمود">${esc(b.c)}<td data-l="الرف">${esc(b.s)}<td data-l="المنتجات">${ps.length}<td data-l="القطع">${ps.reduce((a,p)=>a+p.qty,0)}<td><button class="x" data-act="showB" ${da({code:b.code})}>عرض المحتوى</button> <button class="x" data-act="editB" ${da({code:b.code})}>نقل الصندوق</button> <button class="x" data-act="delB" ${da({code:b.code})}>حذف</button>`}).join("")}</tbody></table></div>`:'<p class="empty">لا توجد صناديق بعد.</p>')}
+const viewR=()=>{setTimeout(users,0);return'<div id="ul"></div>'};
+async function users(){try{const l=await api("/api/users");$("#ul").innerHTML=`<section class="card"><h3>إضافة مستخدم</h3><div id="nu" class="g2"><input placeholder="اسم المستخدم (أو البريد)" dir="ltr" autocomplete="off"><input placeholder="الاسم الظاهر"><input placeholder="كلمة المرور (6 أحرف+)" autocomplete="new-password"><select><option value="worker">عامل: بحث فقط</option><option value="admin">مسؤول</option></select></div><div class="bar"><button class="pri" data-ua="add">+ إضافة</button></div></section><div class="tw"><table style="min-width:700px"><thead><tr><th>الاسم<th>اسم الدخول<th>الدور<th>كلمة مرور جديدة<th></thead><tbody>${l.map(u=>`<tr><td class="nm">${esc(u.name)}<td class="bc" data-l="اسم الدخول">${esc(u.username)}<td data-l="الدور"><button class="x" data-ua="role" data-u="${esc(u.username)}" data-r="${u.role==="admin"?"worker":"admin"}">${u.role==="admin"?"مسؤول ← اجعله عاملاً":"عامل ← اجعله مسؤولاً"}</button><td data-l="كلمة مرور"><div class="bar" style="margin:0"><input type="password" autocomplete="new-password"><button class="x" data-ua="pw" data-u="${esc(u.username)}">تغيير</button></div><td><button class="x" data-ua="del" data-u="${esc(u.username)}">حذف</button>`).join("")}</tbody></table></div>`}catch(e){toast(e.message)}}
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-ua]");if(!t)return;const a=t.dataset.ua,u=encodeURIComponent(t.dataset.u||"");
+try{if(a==="add"){const f=$("#nu").querySelectorAll("input,select");await api("/api/users",{method:"POST",body:JSON.stringify({username:f[0].value,name:f[1].value,password:f[2].value,role:f[3].value})});toast("تمت الإضافة")}
+else if(a==="role")await api("/api/users/"+u,{method:"PUT",body:JSON.stringify({role:t.dataset.r})});
+else if(a==="pw"){const v=t.previousElementSibling.value;if(v.length<6)return toast("6 أحرف على الأقل");await api("/api/users/"+u,{method:"PUT",body:JSON.stringify({password:v})});toast("تم تغيير كلمة المرور")}
+else if(a==="del"){if(!await ask("حذف هذا المستخدم؟"))return;await api("/api/users/"+u,{method:"DELETE"})}
+users()}catch(x){toast(x.message)}});
+const viewK=()=>`<section class="card"><h3>نسخة احتياطية</h3><p class="mut">تُحفظ بياناتك تلقائيًا على الخادم بعد كل تعديل (مجلد data). لمزيد من الأمان انسخ النص التالي واحفظه في ملف، ويمكن لصقه لاحقًا لاستعادته على أي جهاز.</p><textarea id="ex" readonly rows="6" dir="ltr">${esc(JSON.stringify(S))}</textarea><div class="bar"><button class="pri" data-act="copy">نسخ</button></div></section><section class="card"><h3>استعادة</h3><textarea id="im" rows="4" dir="ltr" placeholder="الصق النسخة الاحتياطية هنا"></textarea><div class="bar"><button data-act="imp">استعادة (تستبدل البيانات الحالية)</button></div></section>`;
+function render(){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));const m=$("#app");
+if(tab==="s"){m.innerHTML=`<div class="bar"><input id="q" type="search" placeholder="ابحث: اسم، باركود، لون، مقاس، صندوق، أسكفة…" autocomplete="off"><button class="pri adm" data-act="addP">+ منتج</button></div><div id="sum" class="mut"></div><div id="res" style="margin-top:8px"></div>`;$("#q").value=q;res();$("#q").focus()}
+else m.innerHTML=tab==="l"?viewL():tab==="b"?viewB():tab==="r"?viewR():viewK()}
+const refresh=()=>tab==="s"?res():render();
+
+function openProd(id,pre){const p=id?S.prods.find(x=>x.id===id):{qty:1,...pre},uq=a=>[...new Set(a.filter(Boolean))];
+$("#dp").innerHTML=`<form id="fp" data-id="${id||""}"><h3>${id?"تعديل منتج":"منتج جديد"}</h3><label>اسم المنتج<input name="n" required value="${esc(p.name)}"></label><label>الباركود<input name="bc" dir="ltr" value="${esc(p.barcode)}"></label><div class="g2"><label>اللون<input name="co" list="lc" value="${esc(p.color)}"></label><label>المقاس<input name="sz" list="ls" value="${esc(p.size)}"></label></div><label>الكمية<input name="qy" type="number" min="0" required value="${p.qty}"></label><label>الصندوق<select name="bx"><option value="">بدون صندوق (موقع مباشر)</option>${S.boxes.map(b=>`<option ${b.code===p.box?"selected":""}>${esc(b.code)}</option>`).join("")}</select></label><div id="pw" ${p.box?"hidden":""}>${loc3("pl",p)}</div><datalist id="lc">${uq(S.prods.map(x=>x.color)).map(x=>`<option>${esc(x)}</option>`).join("")}</datalist><datalist id="ls">${uq(["S","M","L","XL","XXL",...S.prods.map(x=>x.size)]).map(x=>`<option>${esc(x)}</option>`).join("")}</datalist><div class="bar"><button class="pri" value="ok">حفظ</button>${id?"":'<button class="ghost" value="more">حفظ وإضافة آخر</button>'}<button type="button" class="ghost" data-act="close">إلغاء</button></div></form>`;$("#dp").showModal();$("#fp [name=n]").focus()}
+function openBox(code){const b=code?boxOf(code):{code:"BX-"+String(S.boxes.length+1).padStart(4,"0")};
+$("#dp").innerHTML=`<form id="fb" data-old="${esc(code||"")}"><h3>${code?"نقل / تعديل صندوق":"صندوق جديد"}</h3><label>كود الصندوق<input name="cd" required dir="ltr" value="${esc(b.code)}" ${code?"readonly":""}></label>${loc3("bl",b)}<div class="bar"><button class="pri">حفظ</button><button type="button" class="ghost" data-act="close">إلغاء</button></div></form>`;$("#dp").showModal()}
+
+document.addEventListener("submit",e=>{e.preventDefault();const f=e.target;
+if(f.id==="fp"){const g=n=>f.elements[n].value.trim(),bx=g("bx"),L=bx?{u:"",c:"",s:""}:rd("pl"),o={name:g("n"),barcode:g("bc"),color:g("co"),size:g("sz"),qty:Math.max(0,+g("qy")||0),box:bx,...L},id=f.dataset.id;
+if(id)Object.assign(S.prods.find(x=>x.id===id),o);else S.prods.push({id:uid(),...o});save();$("#dp").close();toast("تم الحفظ");if(e.submitter&&e.submitter.value==="more")openProd(null,{box:bx,...L});refresh()}
+if(f.id==="fb"){const code=f.elements.cd.value.trim(),old=f.dataset.old,L=rd("bl");if(!L.s)return toast("حدد الأسكفة والعمود والرف");
+if(old)Object.assign(boxOf(old),L);else{if(boxOf(code))return toast("هذا الكود مستخدم");S.boxes.push({id:uid(),code,...L})}save();$("#dp").close();toast("تم الحفظ");refresh()}});
+document.addEventListener("change",e=>{const t=e.target;if(t.name==="bx")$("#pw").hidden=!!t.value;const g=t.closest(".g3");if(!g)return;const[u,c,s]=g.querySelectorAll("select");
+if(t===u){c.innerHTML=opts(Object.keys(S.loc[u.value]||{}),"","العمود");s.innerHTML=opts([],"","الرف")}if(t===c)s.innerHTML=opts((S.loc[u.value]||{})[c.value]||[],"","الرف")});
+document.addEventListener("input",e=>{if(e.target.id==="q"){q=e.target.value;res()}});
+document.addEventListener("keydown",e=>{if(e.target.id==="q"&&e.key==="Enter"&&q.trim()&&!doSearch().length)openProd(null,{barcode:q.trim()});if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.nextElementSibling?.dataset?.act)e.target.nextElementSibling.click()});
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-act],.tab");if(!t)return;if(t.classList.contains("tab")){tab=t.dataset.tab;return render()}
+const d=t.dataset,a=d.act,v=t.previousElementSibling?.value||"",P=id=>S.prods.find(x=>x.id===id);
+if(!ADMIN&&a!=="close")return toast("هذه العملية للمسؤولين فقط");
+if(a==="close")$("#dp").close();
+else if(a==="addP")openProd();else if(a==="editP")openProd(d.id);
+else if(a==="delP"){if(await ask("حذف هذا المنتج؟")){S.prods=S.prods.filter(x=>x.id!==d.id);save();res()}}
+else if(a==="qp"||a==="qm"){const p=P(d.id);p.qty=Math.max(0,p.qty+(a==="qp"?1:-1));save();res()}
+else if(a==="addU"){if(!names(v).length)return toast("اكتب اسم الأسكفة أولًا");names(v).forEach(n=>S.loc[n]=S.loc[n]||{});save();render();toast("تمت إضافة الأسكفة");$("#app input")?.focus()}
+else if(a==="addC"){if(!names(v).length)return toast("اكتب اسم العمود أولًا");names(v).forEach(n=>S.loc[d.u][n]=S.loc[d.u][n]||[]);save();render();toast("تمت إضافة العمود")}
+else if(a==="addS"){if(!names(v).length)return toast("اكتب اسم الرف أولًا");names(v).forEach(n=>{const l=S.loc[d.u][d.c];if(!l.includes(n))l.push(n)});save();render();toast("تمت إضافة الرف")}
+else if(a==="delU"||a==="delC"||a==="delS"){if(inUse(d.u,d.c,d.s))return toast("لا يمكن الحذف: عليه صناديق أو منتجات");if(!await ask("تأكيد الحذف؟"))return;
+if(a==="delU")delete S.loc[d.u];else if(a==="delC")delete S.loc[d.u][d.c];else S.loc[d.u][d.c]=S.loc[d.u][d.c].filter(x=>x!==d.s);save();render()}
+else if(a==="addB"){if(!Object.keys(S.loc).length)return toast("عرّف المواقع أولًا");openBox()}
+else if(a==="editB")openBox(d.code);
+else if(a==="showB"){tab="s";q=d.code;render()}
+else if(a==="delB"){if(S.prods.some(p=>p.box===d.code))return toast("الصندوق يحتوي منتجات");if(await ask("حذف الصندوق؟")){S.boxes=S.boxes.filter(b=>b.code!==d.code);save();render()}}
+else if(a==="copy"){const x=$("#ex");try{await navigator.clipboard.writeText(x.value)}catch(_){x.select();document.execCommand("copy")}toast("تم النسخ")}
+else if(a==="imp"){try{const j=JSON.parse($("#im").value);if(!j.loc||!Array.isArray(j.boxes)||!Array.isArray(j.prods))throw 0;if(await ask("ستُستبدل البيانات الحالية. متابعة؟")){S=j;save();toast("تمت الاستعادة")}}catch(_){toast("النص غير صالح")}}
+else if(a==="mig"){if(await ask("نقل بيانات هذا الجهاز وإضافتها إلى المخزن المشترك؟")){Object.entries(LOC.loc||{}).forEach(([u,cs])=>{S.loc[u]=S.loc[u]||{};Object.entries(cs).forEach(([c,ss])=>{const l=S.loc[u][c]=S.loc[u][c]||[];ss.forEach(s=>l.includes(s)||l.push(s))})});(LOC.boxes||[]).forEach(b=>boxOf(b.code)||S.boxes.push(b));S.prods.push(...(LOC.prods||[]));LOC=null;await save();toast("تم النقل");render()}}
+else if(a==="seed"){S.loc={"أ1":{"ع1":["ر1","ر2","ر3"],"ع2":["ر1","ر2"]},"أ2":{"ع1":["ر1","ر2"]}};S.boxes=[{code:"BX-0001",u:"أ1",c:"ع1",s:"ر2"},{code:"BX-0002",u:"أ2",c:"ع1",s:"ر1"}];
+S.prods=[["قميص قطن","6281001","أبيض","L",12,"BX-0001"],["قميص قطن","6281001","أسود","M",8,"BX-0001"],["بنطال جينز","6281002","أزرق","32",5,"BX-0002"],["جاكيت شتوي","6281003","رمادي","XL",3,"BX-0002"]].map(([name,barcode,color,size,qty,box])=>({id:uid(),name,barcode,color,size,qty,box,u:"",c:"",s:""}));save();render()}});
+render();
+const MAIN="nedaldolty@gmail.com";let VER=0,ME=null,POLL=0;
+const api=async(u,o={})=>{const r=await fetch(u,{credentials:"same-origin",headers:{"content-type":"application/json"},...o});const j=await r.json().catch(()=>({}));if(r.status===401&&ME){ME=null;clearInterval(POLL);boot()}if(!r.ok)throw new Error(j.error||r.status);return j};
+const gate=h=>{const g=$("#gate");g.className="";g.innerHTML=`<div class="gc"><div style="font-size:48px">👕</div><h2>مخزن الملابس</h2>${h}</div>`};
+function load(d){S={loc:{},boxes:[],prods:[]};SYN={};for(const[p,v]of Object.entries(d)){SYN[p]=J(v);if(p==="meta/loc"){try{S.loc=JSON.parse(v.json)}catch(e){}}else if(p.startsWith("boxes/"))S.boxes.push({...v});else S.prods.push({...v})}if(!$("#dp").open&&$("#gate").className==="off")refresh()}
+const pull=async()=>{try{const r=await api("/api/sync?v="+VER);if(r.docs){VER=r.v;load(r.docs)}}catch(e){}};
+const start=async()=>{ADMIN=ME.role==="admin";document.body.classList.toggle("ro",!ADMIN);$("#role").textContent=ME.name+" · "+(ADMIN?"مسؤول":"عامل")+" ⇄";VER=0;await pull();$("#gate").className="off";tab="s";render();clearInterval(POLL);POLL=setInterval(pull,3000)};
+const loginForm=setup=>{gate(`<form id="lf"><p class="mut">${setup?"أول تشغيل: أنشئ حساب المسؤول الرئيسي":"تسجيل الدخول"}</p>${setup?'<label>الاسم<input name="n" required></label>':""}<label>اسم المستخدم (أو البريد)<input name="u" required dir="ltr" autocomplete="username" value="${setup?MAIN:""}"></label><label>كلمة المرور<input name="p" type="password" required minlength="6" autocomplete="${setup?"new-password":"current-password"}"></label><p id="le" style="color:var(--bad)"></p><button class="pri">${setup?"إنشاء الحساب":"دخول"}</button></form>`);
+$("#lf").onsubmit=async e=>{e.preventDefault();const f=e.target.elements;try{const r=await api(setup?"/api/setup":"/api/login",{method:"POST",body:JSON.stringify({name:f.n&&f.n.value,username:f.u.value,password:f.p.value})});ME=r.user;start()}catch(x){$("#le").textContent=x.message}}};
+const boot=async()=>{document.body.classList.add("ro");try{const r=await api("/api/me");if(r.setup)return loginForm(true);if(r.user){ME=r.user;return start()}loginForm(false)}catch(e){gate('<p class="mut">تعذّر الاتصال بالخادم</p><button id="gr">إعادة المحاولة</button>');$("#gr").onclick=boot}};
+$("#role").onclick=async()=>{if(await ask("تسجيل الخروج؟")){await api("/api/logout",{method:"POST"}).catch(()=>{});ME=null;clearInterval(POLL);boot()}};
+boot();
+</script></body></html>
